@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>삼국지: 천하의 서막</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- 시작 및 군주 선택 화면 -->
+  <section id="start-screen" class="overlay-screen">
+    <div class="start-container">
+      <p class="subtitle">후한 말, 천하를 통일할 군주를 선택하세요</p>
+      <h1 class="main-title">삼국지 : 천하의 서막</h1>
+
+      <div id="continue-box" class="continue-box hidden">
+        <p id="continue-info"></p>
+        <button id="btn-continue" class="btn-gold">저장된 게임 이어하기</button>
+      </div>
+
+      <div class="ruler-grid">
+        <article class="ruler-card" data-ruler="liubei">
+          <img id="preview-liubei" alt="유비" class="ruler-portrait" />
+          <h2>유비 (촉)</h2>
+          <p class="ruler-desc">인덕과 결속의 군주. 서쪽의 성도와 한중에서 시작합니다.</p>
+          <ul class="ruler-meta">
+            <li>시작 성: 성도, 한중</li>
+            <li>대표 장수: 관우, 장비</li>
+          </ul>
+          <button class="btn-select" data-ruler="liubei">유비로 시작</button>
+        </article>
+
+        <article class="ruler-card" data-ruler="caocao">
+          <img id="preview-caocao" alt="조조" class="ruler-portrait" />
+          <h2>조조 (위)</h2>
+          <p class="ruler-desc">강력한 내정과 군사력을 갖춘 패자. 중원의 허창과 낙양을 보유합니다.</p>
+          <ul class="ruler-meta">
+            <li>시작 성: 허창, 낙양</li>
+            <li>대표 장수: 하후돈, 곽가</li>
+          </ul>
+          <button class="btn-select" data-ruler="caocao">조조로 시작</button>
+        </article>
+
+        <article class="ruler-card" data-ruler="sunquan">
+          <img id="preview-sunquan" alt="손권" class="ruler-portrait" />
+          <h2>손권 (오)</h2>
+          <p class="ruler-desc">강남의 풍요와 수군을 바탕으로 천하를 도모합니다.</p>
+          <ul class="ruler-meta">
+            <li>시작 성: 건업, 형주</li>
+            <li>대표 장수: 주유, 감녕</li>
+          </ul>
+          <button class="btn-select" data-ruler="sunquan">손권으로 시작</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 메인 게임 화면 -->
+  <div id="game-app" class="hidden">
+    <header class="top-bar">
+      <div class="top-left">
+        <span id="date-display" class="badge-gold">208년 1월</span>
+        <span id="ruler-badge" class="badge-faction">유비 세력</span>
+        <span id="save-indicator" class="save-badge">자동 저장됨</span>
+      </div>
+
+      <div class="top-resources">
+        <div class="res-item">
+          <span class="res-label">금</span>
+          <strong id="res-gold">0</strong>
+        </div>
+        <div class="res-item">
+          <span class="res-label">군량</span>
+          <strong id="res-food">0</strong>
+        </div>
+        <div class="res-item">
+          <span class="res-label">총 병력</span>
+          <strong id="res-troops">0</strong>
+        </div>
+        <div class="res-item">
+          <span class="res-label">보유 성</span>
+          <strong id="res-castles">0 / 6</strong>
+        </div>
+      </div>
+
+      <div class="top-controls">
+        <button id="btn-bgm" class="btn-sm">배경음악: ON</button>
+        <button id="btn-sfx" class="btn-sm">효과음: ON</button>
+        <button id="btn-tutorial" class="btn-sm btn-outline-gold">튜토리얼</button>
+        <button id="btn-new-game" class="btn-sm btn-danger">처음으로</button>
+      </div>
+    </header>
+
+    <main class="main-layout">
+      <!-- 좌측: 천하 지도 및 성 목록 -->
+      <aside class="panel left-panel">
+        <div class="panel-header">
+          <h2>천하 형세도</h2>
+          <button class="help-btn" data-help="map" title="지도 도움말">?</button>
+        </div>
+        <div id="map-board" class="map-board">
+          <svg id="map-lines" viewBox="0 0 360 280" preserveAspectRatio="none"></svg>
+          <div id="map-nodes"></div>
+        </div>
+
+        <div class="panel-header sub-header">
+          <h3>전체 성 목록</h3>
+        </div>
+        <div id="castle-list" class="castle-list"></div>
+      </aside>
+
+      <!-- 중앙: 3D 디오라마풍 성 화면 + 행동 기록 -->
+      <section class="panel center-panel">
+        <div class="panel-header">
+          <div>
+            <h2 id="stage-title">성도</h2>
+            <span id="stage-owner" class="owner-tag">유비 세력</span>
+          </div>
+          <button class="help-btn" data-help="castle" title="성 화면 도움말">?</button>
+        </div>
+
+        <div id="diorama-stage" class="diorama-stage">
+          <div class="diorama-plane">
+            <img id="stage-bg" alt="성 배경" class="stage-bg" />
+            <div id="stage-actors" class="stage-actors"></div>
+          </div>
+          <div id="stage-stats" class="stage-stats-overlay"></div>
+        </div>
+
+        <div class="log-section">
+          <div class="panel-header sub-header">
+            <h3>역사 기록 (행동 결과)</h3>
+            <button id="btn-end-turn" class="btn-gold">턴 종료 (다음 달)</button>
+          </div>
+          <ul id="log-list" class="log-list"></ul>
+        </div>
+      </section>
+
+      <!-- 우측: 내정/전투/연구/외교/장수 -->
+      <aside class="panel right-panel">
+        <div class="tab-bar">
+          <button class="tab-btn active" data-tab="actions">내정·전투</button>
+          <button class="tab-btn" data-tab="research">연구</button>
+          <button class="tab-btn" data-tab="diplomacy">외교</button>
+          <button class="tab-btn" data-tab="generals">장수</button>
+        </div>
+
+        <!-- 내정 및 공격 -->
+        <div id="panel-actions" class="tab-content active">
+          <div class="panel-header sub-header">
+            <h3>선택한 성 명령</h3>
+            <button class="help-btn" data-help="actions" title="명령 도움말">?</button>
+          </div>
+          <p id="action-status" class="status-note"></p>
+          <div id="action-buttons" class="action-grid">
+            <button class="action-btn" data-action="farm">
+              <strong>농업 개발</strong>
+              <span>금 120 · 농업 +15 (군량 수입 증가)</span>
+            </button>
+            <button class="action-btn" data-action="commerce">
+              <strong>상업 개발</strong>
+              <span>금 120 · 상업 +15 (금 수입 증가)</span>
+            </button>
+            <button class="action-btn" data-action="train">
+              <strong>병력 훈련</strong>
+              <span>금 100, 군량 80 · 병력 +400, 훈련 +8</span>
+            </button>
+            <button class="action-btn" data-action="recruit">
+              <strong>장수 등용</strong>
+              <span>금 150 · 재야 장수 1명 합류</span>
+            </button>
+          </div>
+
+          <div class="panel-header sub-header">
+            <h3>인접한 적성 공격</h3>
+            <button class="help-btn" data-help="battle" title="전투 도움말">?</button>
+          </div>
+          <div id="attack-targets" class="attack-targets"></div>
+        </div>
+
+        <!-- 연구 -->
+        <div id="panel-research" class="tab-content">
+          <div class="panel-header sub-header">
+            <h3>세력 연구 (1단계 완료 후 2단계 해금)</h3>
+            <button class="help-btn" data-help="research" title="연구 도움말">?</button>
+          </div>
+          <div id="research-active" class="status-note"></div>
+          <div id="research-grid" class="research-grid"></div>
+        </div>
+
+        <!-- 외교 -->
+        <div id="panel-diplomacy" class="tab-content">
+          <div class="panel-header sub-header">
+            <h3>타 세력 외교 관계</h3>
+            <button class="help-btn" data-help="diplomacy" title="외교 도움말">?</button>
+          </div>
+          <div id="diplomacy-list" class="diplomacy-list"></div>
+        </div>
+
+        <!-- 장수 -->
+        <div id="panel-generals" class="tab-content">
+          <div class="panel-header sub-header">
+            <h3>소속 장수 목록</h3>
+            <button class="help-btn" data-help="generals" title="장수 도움말">?</button>
+          </div>
+          <div id="general-list" class="general-list"></div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <!-- 전투 결과 모달 -->
+  <div id="battle-modal" class="modal hidden">
+    <div class="modal-card battle-card">
+      <div class="battle-stage">
+        <img id="battle-bg" alt="전투 배경" class="battle-bg" />
+        <div class="battle-overlay">
+          <h2 id="battle-title">전투 보고</h2>
+          <div id="battle-visual" class="battle-visual"></div>
+        </div>
+      </div>
+      <div class="battle-body">
+        <div id="battle-formula" class="battle-formula"></div>
+        <p id="battle-result-text" class="battle-result-text"></p>
+        <button id="btn-close-battle" class="btn-gold">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 튜토리얼 모달 -->
+  <div id="tutorial-modal" class="modal hidden">
+    <div class="modal-card tutorial-card">
+      <div class="panel-header">
+        <h2 id="tutorial-step-title">튜토리얼</h2>
+        <span id="tutorial-step-indicator" class="badge-gold">1 / 6</span>
+      </div>
+      <div id="tutorial-step-body" class="tutorial-body"></div>
+      <div class="modal-footer">
+        <button id="btn-tut-prev" class="btn-sm">이전</button>
+        <button id="btn-tut-next" class="btn-gold">다음</button>
+        <button id="btn-tut-close" class="btn-sm">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 기능별 빠른 도움말 토스트 -->
+  <div id="help-toast" class="help-toast hidden">
+    <div class="help-toast-header">
+      <strong id="help-toast-title">도움말</strong>
+      <button id="btn-close-help" class="btn-xs">닫기</button>
+    </div>
+    <p id="help-toast-body"></p>
+  </div>
+
+  <!-- 천하통일 / 패배 모달 -->
+  <div id="ending-modal" class="modal hidden">
+    <div class="modal-card ending-card">
+      <h2 id="ending-title">천하통일</h2>
+      <p id="ending-desc"></p>
+      <button id="btn-ending-restart" class="btn-gold">새 게임 시작</button>
+    </div>
+  </div>
+
+  <script src="assets.js"></script>
+  <script src="audio.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
