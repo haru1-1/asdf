@@ -718,3 +718,20 @@ button:disabled {
     font-size: 0.8rem;
   }
 }
+
+
+/* 전체 이미지 적용용 초상화·토큰 보정 */
+.actor-sprite img,
+.battle-unit img {
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  object-fit: cover;
+  object-position: top center;
+  background: #0b1324;
+}
+
+.general-card img,
+.ruler-portrait {
+  object-fit: cover;
+  object-position: top center;
+}

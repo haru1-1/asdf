@@ -2,29 +2,29 @@
 // 아래 빈 문자열("")에 파일 경로(예: "./images/chengdu.png", "./audio/bgm.mp3")를 입력하세요.
 const CUSTOM_ASSETS = {
   castles: {
-    chengdu: "",
-    hanzhong: "",
-    xuchang: "",
-    luoyang: "",
-    jianye: "",
-    jingzhou: ""
+    chengdu: "./images/chengdu.jpg",
+    hanzhong: "./images/hanzhong.jpg",
+    xuchang: "./images/xuchang.jpg",
+    luoyang: "./images/luoyang.jpg",
+    jianye: "./images/jianye.jpg",
+    jingzhou: "./images/jingzhou.jpg"
   },
   battles: {
-    mountain: "",
-    plains: "",
-    river: ""
+    mountain: "./images/battle_mountain.jpg",
+    plains: "./images/battle_plains.jpg",
+    river: "./images/battle_river.jpg"
   },
   characters: {
-    liubei: "",
-    caocao: "",
-    sunquan: "",
-    general_shu: "",
-    general_wei: "",
-    general_wu: "",
-    soldier_shu: "",
-    soldier_wei: "",
-    soldier_wu: "",
-    citizen: ""
+    liubei: "./images/liubei.jpg",
+    caocao: "./images/caocao.jpg",
+    sunquan: "./images/sunquan.jpg",
+    general_shu: "./images/general_shu.jpg",
+    general_wei: "./images/general_wei.jpg",
+    general_wu: "./images/general_wu.jpg",
+    soldier_shu: "./images/soldier_shu.jpg",
+    soldier_wei: "./images/soldier_wei.jpg",
+    soldier_wu: "./images/soldier_wu.jpg",
+    citizen: "./images/citizen.jpg"
   },
   audio: {
     bgm: "",
